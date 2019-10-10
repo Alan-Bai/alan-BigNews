@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        iframe {
+            width: 800px;
+            height: 600px;
+            display: block;
+            margin: 0 auto;
+            background-color: #dd0;
+        }
+    </style>
+</head>
+<body>
+    <!-- a标签的target属性值为:
+        _self属性,默认不跳转页面打开herf中的网页
+        _blank属性,打开新的网页
+        iframe中的name属性值,在iframe标签中打开本身的herf网页
+    -->
+    <a href="http://www.baidu.com" target="myiframe">点1</a>
+    <a href="http://www.jd.com" target="myiframe">点2</a>
+    <a href="http://www.taobao.com" target="myiframe">点3</a>
+    <iframe src="http://www.baidu.com" frameborder="0" name="myiframe"></iframe>
+</body>
+</html>
