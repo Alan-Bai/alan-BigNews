@@ -38,13 +38,80 @@
     </div>
   </div>
 
+  <!-- 模态框引入 -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">友情提示</h4>
+        </div>
+        <div class="modal-body">
+          <p>登录成功&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-warning" data-dismiss="modal">确定</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
   <script>
-    // 入口函数
-    $('input_sub').on('click',function () {
-      if($('.input_txt').val().trim().leng == 0 || $('.input_pass').val().trim().leng == 0){
-        alert('请输入用户名和密码');
+      /* 1.登录按钮点击事件
+      *** 注意点： 表单按钮需要阻止默认跳转行为 ***
+      1.1 非空判断
+      1.2 获取用户名和密码
+      1.3 ajax发送请求
+      1.4 响应数据之后 跳转 首页
+       */
+      // 入口函数
+    $(function () {
+      // 1.登录按钮点击事件
+      $('.input_sub').on('click',function (e) {
+        // 阻止默认跳转
+        e.preventDefault();
+        // 非空判断
+        if($('.input_txt').val().trim().length == 0 || $('.input_pass').val().trim().length == 0){
+          $('.modal-body>p').text('请输入用户名和密码');
+        //直接结束代码执行
         return;
-      }
+        };
+        // 1.2 Ajax发送请求,获取用户名和密码
+        $.ajax({
+          url:'http://localhost:8080/api/v1/admin/user/login',
+          type:'post',
+          dataType:'json',
+          data:{
+            username:$('.input_txt').val(),
+            password:$('.input_pass').val()
+          },
+          success: function(backData){
+            // 1.2.1打印获取后的数据
+            console.log(backData);
+            // 数据相应后 跳转首页
+            if(backData.code == 200){
+              // alert('登陆成功');
+              // 1.2.2修改模态框提示信息
+              $('.modal-body>p').text('登录成功');
+              // 1.2.3弹出模态框
+              $('#myModal').modal();
+              // 1.2.4用户点击确认后跳转首页
+              $('#myModal').on('hidden.bs.modal',function () {
+                // 跳转首页
+              window.location.href = './index.html';
+                // 将服务器返回的token存入localStorage中
+                window.localStorage.setItem('token',backData.token);
+              });
+            }else {
+              // 修改模态框的提示信息
+              $('.modal-body>p').text(backData.msg);
+              // 弹出模态框
+              $('#myModal').modal();
+            }
+          }
+        });
+      });
+      
     });
   </script>
 
