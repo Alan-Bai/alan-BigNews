@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 01-导包: bt三个文件+插件 -->
+    <script src="./jquery-1.12.4.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="./jquery.twbsPagination.js"></script>
+
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- 02-写HTML结构 -->
+    <ul id="pagination" class="pagination-sm"></ul>
+
+    <button id="btn">筛选</button>
+
+    <script>
+        /* 03-初始化 */
+        $('#pagination').twbsPagination({
+            totalPages: 35,
+            visiblePages: 6,
+            first:'首页',
+            prev:'上一页',
+            next:'下一页',
+            last:'尾页',
+            onPageClick: function (event, page) {
+                $('#page-content').text('Page ' + page);
+                console.log(page);    
+            }
+        });
+
+
+        $('#btn').click(function(){
+            //模拟筛选功能：总页数发生变化
+            var num = Math.ceil(Math.random()*100);
+            //(1)先销毁已经存在的插件
+            $('#pagination').twbsPagination('destroy');
+            //(2)初始化新的插件
+            $('#pagination').twbsPagination({
+            totalPages: num,
+            visiblePages: 6,
+            first:'首页',
+            prev:'上一页',
+            next:'下一页',
+            last:'尾页',
+            onPageClick: function (event, page) {
+                $('#page-content').text('Page ' + page);
+                console.log(page);    
+            }
+        });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-$(function (w) {
+(function (w) {
     // 项目基地址
     var baseURL = 'http://localhost:8080/api/v1';
     // 声明对象存入数据接口
@@ -23,4 +23,6 @@ $(function (w) {
         comment_reject:  baseURL + '/admin/comment/reject',//文章评论不通过
         comment_delete:  baseURL + '/admin/comment/delete',//文章评论删除
     };
+    // 暴露接口
+    w.BigNew = BigNew;
   })(window);
